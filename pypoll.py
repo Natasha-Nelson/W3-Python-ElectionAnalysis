@@ -6,13 +6,37 @@ file_to_load = "election_results.csv"
 # Assign a variable to save the file to a path.
 file_to_save = os.path.join("W3-Python-ElectionAnalysis", "election_analysis.txt")
 
+#Set a Variable to Count Total Number of Votes
+total_Votes = 0
+
+#Create a List of Candidates
+candidate_list = []
+
+#create a Dictionary for Vote Counts
+candidate_votes = {}
+
 # Open the election results and read the file.
 with open(file_to_load) as election_data:
     file_reader = csv.reader(election_data)
     
     headers = next(file_reader)
-    print(headers)
+    #print(headers)
 
+    for row in file_reader:
+        #increase vote count 
+        total_Votes += 1
+
+        #Find candidate names 
+        candidate_name = row[2]
+        if candidate_name not in candidate_list:
+            # add candidate names to the list
+            candidate_list.append(candidate_name)
+            #initialize candidate votes at zero
+            candidate_votes[candidate_name] = 0
+        #start adding votes for each candidate
+        candidate_votes[candidate_name] += 1
+
+print(candidate_votes)
 
 
 #The Types of Data We Need To Get
