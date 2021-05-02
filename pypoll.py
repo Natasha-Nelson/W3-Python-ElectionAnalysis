@@ -4,7 +4,7 @@ import os
 # Assign a variable to load a file from a path.
 file_to_load = "election_results.csv"
 # Assign a variable to save the file to a path.
-file_to_save = os.path.join("W3-Python-ElectionAnalysis", "election_analysis.txt")
+file_to_save = "election_analysis.txt"
 
 #Set a Variable to Count Total Number of Votes
 total_Votes = 0
@@ -41,44 +41,33 @@ with open(file_to_load) as election_data:
         #start adding votes for each candidate
         candidate_votes[candidate_name] += 1
 
-for candidate_name in candidate_votes:
-    votes = candidate_votes[candidate_name]
-    # divide the value of vote for candidate by total votes
-    vote_percentage = float(votes) / float(total_Votes) * 100
+    # Save the results to our text file.
+    with open(file_to_save,'w') as txt_file:
+        election_results = (
+            f"\nElection Results\n"
+            f"-------------------------\n"
+            f"Total Votes: {total_Votes:,}\n"
+            f"-------------------------\n")
+        print(election_results, end="")
+        # Save the final vote count to the text file.   
+        txt_file.write(election_results)
 
-    print(f"{candidate_name}: {vote_percentage:.1f}% ({votes:,})\n")
+        for candidate_name in candidate_votes:
+            votes = candidate_votes[candidate_name]
+            # divide the value of vote for candidate by total votes
+            vote_percentage = float(votes) / float(total_Votes) * 100
 
-    if (votes > winning_count) and (vote_percentage > winning_percentage):
-        winning_percentage = vote_percentage
-        winning_count = votes
-        winning_candidate = candidate_name
-        
-winning_candidate_summary = (
-    f"-------------------------\n"
-    f"Winner: {winning_candidate}\n"
-    f"Winning Vote Count: {winning_count:,}\n"
-    f"Winning Percentage: {winning_percentage:.1f}%\n"
-    f"-------------------------\n")
-print(winning_candidate_summary)
+            #print(f"{candidate_name}: {vote_percentage:.1f}% ({votes:,})\n")
 
+            if (votes > winning_count) and (vote_percentage > winning_percentage):
+                winning_percentage = vote_percentage
+                winning_count = votes
+                winning_candidate = candidate_name
 
-#The Types of Data We Need To Get
-# Total number of votes cast
-## Create a total_votes variable
-## Set the variable Count the number of unique ballot IDs in the datasheet
-
-#A complete list of candidates who received votes
-## Create a new list
-## Add the first candidate's name to the list
-## Check the next name on the list
-## If the name is not on the list, add it to the list
-
-#Total number of votes each candidate received
-## Start a new dictionary
-## Create a key-value system for votes for each candidate
-
-#Percentage of votes each candidate won
-## divide the value of vote for candidate by total votes
-
-#The winner of the election based on popular vote
-## figure out which candidate has the biggest number of votes
+        winning_candidate_summary = (
+            f"-------------------------\n"
+            f"Winner: {winning_candidate}\n"
+            f"Winning Vote Count: {winning_count:,}\n"
+            f"Winning Percentage: {winning_percentage:.1f}%\n"
+            f"-------------------------\n")
+        #print(winning_candidate_summary)
